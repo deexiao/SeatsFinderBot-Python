@@ -5,7 +5,7 @@ An auto class enroll Bot made for ASU Students written in Python 3.
 1. Python 3
 2. ChromeDriver installed: http://chromedriver.chromium.org/
 ## Sample command
-python3 SeatsFinderBot.py --choice "swap" --username ".." --password ".." --swapwith 12345 --section 54321
+python3 SeatsFinderBot.py --choice "swap" --username ".." --password ".." --swapwith 12345 --section 54321 --guid ".."
 
 ## Command Arguments
 
