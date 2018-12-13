@@ -1,5 +1,6 @@
 # SeatsFinderBot
-An auto class enroll Bot made for ASU Students written in Python 3.
+An auto class enroll bot made for ASU Students written in Python 3.
+SeatsFinderBot is an Open Source project, it does not collect your ASU username and password.
 
 ## System Requirements
 1. Python 3
