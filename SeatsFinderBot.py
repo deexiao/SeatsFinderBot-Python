@@ -13,6 +13,7 @@ import datetime
 import urllib.request
 import threading
 import sys
+import unicodedata
 
 statusURL = "http://104.154.119.236/api/WebAPI?GetSuperPowerVMTaskSchedulerStatus=true&guid="
 checkURL = "http://104.154.119.236/api/WebAPI?checkClassStatus=true&prefix=&number=&location=Tempe&term="
@@ -244,9 +245,12 @@ if __name__ == "__main__":
     timeInterval = 10.0
 
     print("\nWelcome to SeatsFinderBot, current task interval is set to " + str(timeInterval) + " seconds.\n")
-    name = input("Before start, we kindly ask your name for recording purpose: ")
+    print("SeatsFinderBot is an Open Source project, it does not collect your ASU username and password.\n")
+    name = input("Before start, we kindly ask your full name (In English) for recording purpose: ")
+    
     print("")
 
+    print("Starting...\n")
     while True:
         runAction(args.semester, args.reserved, args.section, name.replace(" ","-"), args.choice, args.username, args.password, args.swapWith)
         time.sleep(args.timeInterval - ((time.time() - starttime) % args.timeInterval))
