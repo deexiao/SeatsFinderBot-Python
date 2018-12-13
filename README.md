@@ -29,6 +29,3 @@ Class number you would like to enroll, eg: 54321
 
 ### -r or --reserved
 If the class you want to track has reserved seats, specify it here, because my server only checks above 0 situation, eg: 5
-
-### -g or --guid
-Key to use this app, eg: "12345-qwert-zxcvb-67890"
