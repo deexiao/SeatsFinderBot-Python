@@ -237,17 +237,16 @@ if __name__ == "__main__":
     parser.add_argument("-sw", "--swapwith", dest="swapWith")
     parser.add_argument("-s", "--section", dest="section")
     parser.add_argument("-r", "--reserved", dest="reserved", default=0)
-    parser.add_argument("-g", "--guid", dest="GUID")
     parser.add_argument("-t", "--time", dest="timeInterval", default=10.0)
 
     args = parser.parse_args()
-
     starttime = time.time()
-
     timeInterval = 10.0
 
-    print("\nWelcome to SeatsFinderBot, current time interval is set to " + str(timeInterval) + " seconds.\n")
+    print("\nWelcome to SeatsFinderBot, current task interval is set to " + str(timeInterval) + " seconds.\n")
+    name = input("Before start, we kindly ask your name for recording purpose: ")
+    print("")
 
     while True:
-        runAction(args.semester, args.reserved, args.section, args.GUID, args.choice, args.username, args.password, args.swapWith)
+        runAction(args.semester, args.reserved, args.section, name.replace(" ","-"), args.choice, args.username, args.password, args.swapWith)
         time.sleep(args.timeInterval - ((time.time() - starttime) % args.timeInterval))
