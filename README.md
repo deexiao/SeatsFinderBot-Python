@@ -9,7 +9,7 @@ SeatsFinderBot is an Open Source project, it does not collect your ASU username 
 3. ```cd``` to the project, and then ```pip3 install```
 
 ## Sample command
-```python3 SeatsFinderBot.py --choice "swap" --username ".." --password ".." --swapwith 12345 --section 54321 --guid ".."```
+```python3 SeatsFinderBot.py --choice "swap" --username ".." --password ".." --swapwith 12345 --section 54321```
 
 ## Command Arguments
 
