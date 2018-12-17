@@ -8,21 +8,21 @@ SeatsFinderBot is an Open Source project, it does not collect your ASU username 
 2. ChromeDriver installed: http://chromedriver.chromium.org/
 3. ```cd``` to the project, and then ```pip``` all missing packages like follows:
 
-### Mac / Linux
+#### Mac / Linux
 * ```pip3 install selenium```
 * ```pip3 install webdriver_manager```
 
-### Windows
+#### Windows
 * ```py -m pip install selenium```
 * ```py -m pip install webdriver_manager```
 
 ## Sample command
 
-### Mac / Linux
+#### Mac / Linux
 * ```python3 Bot.py --choice 'swap' --username 'a' --password 'a' --swapwith 12345 --section 54321```
 * ```python3 Bot.py --choice 'add' --username 'a' --password 'a' --section 54321 --timeinterval```
 
-### Windows
+#### Windows
 * ```py Bot.py --choice swap --username a --password a --swapwith 12345 --section 54321```
 * ```py Bot.py --choice add --username a --password a --section 54321 --timeinterval```
 
