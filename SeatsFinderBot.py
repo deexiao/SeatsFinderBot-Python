@@ -18,9 +18,16 @@ import unicodedata
 
 statusURL = "http://104.154.119.236/api/WebAPI?GetSuperPowerVMTaskSchedulerStatus=true&guid="
 checkURL = "http://104.154.119.236/api/WebAPI?checkStatusByBot=true&prefix=&number=&location=Tempe&term="
+superPowerStatusURL = "http://104.154.119.236/api/WebAPI?registerStatusNotify=true&status="
+myEmail = "mopjtv@gmail.com"
 
 def get_local_time():
     current_time = datetime.datetime.now().strftime("%H:%M")
+    logging.info("get_local_time(): %s", current_time)
+    return str(current_time)
+
+def get_local_time_inSec():
+    current_time = datetime.datetime.now().strftime("%H:%M:%S")
     logging.info("get_local_time(): %s", current_time)
     return str(current_time)
 
@@ -85,7 +92,6 @@ def addClass(username, password, sectionNum, semesterCombo):
     while check_exists_by_id("P_DELETE$0", driver):
         driver.find_element_by_id("P_DELETE$0").send_keys(Keys.RETURN)
         time.sleep(1)
-
     time.sleep(1)
 
     # Enter Section Number
@@ -116,6 +122,7 @@ def addClass(username, password, sectionNum, semesterCombo):
         FinalStatus = "Error"
     elif "Success" in status:
         FinalStatus = "Success"
+        
     else:
         FinalStatus = "Unknown"
     return FinalStatus
@@ -186,6 +193,7 @@ def swapClass(username, password, sectionNum, swapWith, semesterCombo):
 def urlErrorCheck(url):
     req = Request(url)
     try:
+        # print(url)
         response = urlopen(req).read()
     except HTTPError as e:
         print('Error code: ', e.code)
@@ -199,6 +207,7 @@ def urlErrorCheck(url):
 def runAction(semester, reserved, section, GUID, choice, username, password, swapWith, timeInterval):
     try:
         currTime = get_local_time()
+        currTimeInSec = get_local_time_inSec()
         contents = urlErrorCheck(checkURL + str(semester) + "&sectionNumber=" +
                                  str(section) + "&reservedSeats=" + str(reserved))
         if "FULL" in str(contents):
@@ -208,7 +217,7 @@ def runAction(semester, reserved, section, GUID, choice, username, password, swa
             if choice == "add":
                 urlErrorCheck(statusURL + GUID + "&taskID=" + str(section) +
                               "&time=" + currTime + "&status=FULL")
-            print("Checked on "+currTime+", the class is FULL, next check in " + timeInterval + " seconds.")
+            print("Checked on "+currTimeInSec+", the class is FULL, next check in " + timeInterval + " seconds.")
         elif "OPEN" in str(contents):
             if choice == "swap":
                 urlErrorCheck(statusURL + GUID + "&taskID=" + str(section) +
@@ -218,17 +227,19 @@ def runAction(semester, reserved, section, GUID, choice, username, password, swa
                               "&time=" + currTime + "&status=OPEN")
             if choice == "add":
                 addClass(username, password, section, semester)
+                urlErrorCheck(superPowerStatusURL + "SuccessAdded" + "&email=" + myEmail + "&guid=" + GUID + "&section=" + section)
             if choice == "swap":
                 swapClass(username, password, section, swapWith, semester)
-            print("Checked on "+currTime+", the class is OPEN, next check in " + timeInterval + " seconds.")
+                urlErrorCheck(superPowerStatusURL + "SuccessSwapped" + "&email=" + myEmail + "&guid=" + GUID + "&section=" + section)
+            print("Checked on "+currTimeInSec+", the class is OPEN, next check in " + timeInterval + " seconds.")
         elif "NOT FOUND" in str(contents):
-            print("Checked on "+currTime+", the class is NOT FOUND, next check in " + timeInterval + " seconds.")
+            print("Checked on "+currTimeInSec+", the class is NOT FOUND, next check in " + timeInterval + " seconds.")
         elif "ERRORURL" in str(contents):
-            print("HTTP ERROR on "+currTime+", next check in " + timeInterval + " seconds.")
+            print("HTTP ERROR on "+currTimeInSec+", next check in " + timeInterval + " seconds.")
         else:
-            print("OTHER ERROR on "+currTime+", next check in " + timeInterval + " seconds.")
+            print("OTHER ERROR on "+currTimeInSec+", next check in " + timeInterval + " seconds.")
     except:
-        print("runAction error on "+currTime+", next check in " + timeInterval + " seconds.")
+        print("runAction error on "+currTimeInSec+", next check in " + timeInterval + " seconds.")
 
 if __name__ == "__main__":
     parser = ArgumentParser()
