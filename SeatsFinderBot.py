@@ -20,7 +20,7 @@ statusURL = "http://104.154.119.236/api/WebAPI?GetSuperPowerVMTaskSchedulerStatu
 checkURL = "http://104.154.119.236/api/WebAPI?checkClassStatusBot=true&prefix=&number=&location=Tempe&term="
 
 def get_local_time():
-    current_time = datetime.datetime.now().strftime("%H:%M:%S")
+    current_time = datetime.datetime.now().strftime("%H:%M")
     logging.info("get_local_time(): %s", current_time)
     return str(current_time)
 
@@ -239,7 +239,7 @@ if __name__ == "__main__":
     parser.add_argument("-sw", "--swapwith", dest="swapWith")
     parser.add_argument("-s", "--section", dest="section")
     parser.add_argument("-r", "--reserved", dest="reserved", default=0)
-    parser.add_argument("-t", "--time", dest="timeInterval", default=10.0)
+    parser.add_argument("-t", "--timeinterval", dest="timeInterval", default=10.0)
 
     args = parser.parse_args()
     starttime = time.time()
