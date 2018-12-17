@@ -268,5 +268,5 @@ if __name__ == "__main__":
 
     print("Starting...\n")
     while True:
-        runAction(args.semester, args.reserved, args.section, name.replace(" ","-"), args.choice, args.username, args.password, args.swapWith, args.timeInterval)
+        runAction(args.semester, args.reserved, args.section, name.replace(" ","-"), args.choice, args.username, args.password, args.swapWith, str(args.timeInterval))
         time.sleep(float(args.timeInterval) - ((time.time() - starttime) % float(args.timeInterval)))
