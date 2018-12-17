@@ -17,7 +17,7 @@ import sys
 import unicodedata
 
 statusURL = "http://104.154.119.236/api/WebAPI?GetSuperPowerVMTaskSchedulerStatus=true&guid="
-checkURL = "http://104.154.119.236/api/WebAPI?checkClassStatusBot=true&prefix=&number=&location=Tempe&term="
+checkURL = "http://104.154.119.236/api/WebAPI?checkStatusByBot=true&prefix=&number=&location=Tempe&term="
 
 def get_local_time():
     current_time = datetime.datetime.now().strftime("%H:%M")
