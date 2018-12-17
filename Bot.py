@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select
 from argparse import ArgumentParser
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
+from selenium.webdriver.chrome.options import Options
 
 import pickle
 import time
@@ -127,9 +128,6 @@ def addClass(username, password, sectionNum, semesterCombo):
         FinalStatus = "UnknownStatus"
     return FinalStatus
 
-    # driver.close()
-
-
 def swapClass(username, password, sectionNum, swapWith, semesterCombo):
     driver = webdriver.Chrome(ChromeDriverManager().install())
 
@@ -137,12 +135,13 @@ def swapClass(username, password, sectionNum, swapWith, semesterCombo):
 
     driver.get("https://go.oasis.asu.edu/swapclass/?STRM=" +
                str(STRM) + "&ACAD_CAREER=GRAD&ASU_CLASS_NBR=" + str(sectionNum))
+
     driver.switch_to_frame(driver.find_element_by_xpath("//frame[@src='https://weblogin.asu.edu/cgi-bin/login?callapp=https%3A//go.oasis.asu.edu/waitframeset.html%3Fdelay%3D3500%26url%3Dhttps%253A//cs.oasis.asu.edu/asucsprd/golink/%253F/EMPLOYEE/PSFT_ASUCSPRD/s/WEBLIB_ASU_SA.ASU_SA_ISCRIPT.FieldFormula.IScript_SA%253FURL%253D/EMPLOYEE/PSFT_ASUCSPRD/c/SA_LEARNER_SERVICES.SSR_SSENRL_SWAP.GBL%25253FSTRM%25253D" + str(
         STRM) + "%252526ACAD_CAREER%25253DGRAD%252526ASU_CLASS_NBR%25253D"+str(sectionNum)+"%252526Page%25253DSSR_SSENRL_SWAP%252526Action%25253DA%252526INSTITUTION%25253DASU00%252526golink%25253DY']"))
     driver.find_element_by_id("username").send_keys(username)
     driver.find_element_by_id("password").send_keys(password)
     driver.find_element_by_class_name("submit").send_keys(Keys.RETURN)
-
+    
     driver.switch_to_frame(0)
     driver.switch_to_frame(0)
     driver.switch_to_frame(2)
@@ -193,7 +192,6 @@ def swapClass(username, password, sectionNum, swapWith, semesterCombo):
 def urlErrorCheck(url):
     req = Request(url)
     try:
-        # print(url)
         response = urlopen(req).read()
     except HTTPError as e:
         print('Error code: ', e.code)
@@ -203,7 +201,7 @@ def urlErrorCheck(url):
         return "ERRORURL"
     else:
         return response
-
+             
 def runAction(semester, reserved, section, GUID, choice, username, password, swapWith, timeInterval):
     try:
         currTime = get_local_time()
@@ -220,8 +218,7 @@ def runAction(semester, reserved, section, GUID, choice, username, password, swa
             print("Checked on "+currTimeInSec+", the class is FULL, next check in " + timeInterval + " seconds.")
         elif "OPEN" in str(contents):
             if choice == "swap":
-                urlErrorCheck(statusURL + GUID + "&taskID=" + str(section) +
-                              "&time=" + currTime + "&status=OPEN")
+                urlErrorCheck(statusURL + GUID + "&taskID=" + str(section) + "&time=" + currTime + "&status=OPEN")
             if choice == "add":
                 urlErrorCheck(statusURL + GUID + "&taskID=" + str(section) +
                               "&time=" + currTime + "&status=OPEN")
