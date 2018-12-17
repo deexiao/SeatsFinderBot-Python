@@ -13,7 +13,7 @@ SeatsFinderBot is an Open Source project, it does not collect your ASU username 
 ### Default arguments
 * ```--reserved``` is set to ```0```
 * ```--semester``` is set to ```'Spring+2019'```
-* ```--timeinterval``` is set to ```10 seconds```
+* ```--timeinterval``` is set to ```10``` seconds
 
 ## Command Arguments
 
