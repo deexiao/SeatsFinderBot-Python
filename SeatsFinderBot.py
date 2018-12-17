@@ -7,6 +7,7 @@ from argparse import ArgumentParser
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
+import pickle
 import time
 import logging
 import datetime
@@ -16,7 +17,7 @@ import sys
 import unicodedata
 
 statusURL = "http://104.154.119.236/api/WebAPI?GetSuperPowerVMTaskSchedulerStatus=true&guid="
-checkURL = "http://104.154.119.236/api/WebAPI?checkClassStatus=true&prefix=&number=&location=Tempe&term="
+checkURL = "http://104.154.119.236/api/WebAPI?checkClassStatusBot=true&prefix=&number=&location=Tempe&term="
 
 def get_local_time():
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
@@ -59,7 +60,6 @@ def semesterIndex(semesterCombo):
         return "2247"
     if semesterCombo == "Fall+2025":
         return "2257"
-     
 
 def addClass(username, password, sectionNum, semesterCombo):
     driver = webdriver.Chrome(ChromeDriverManager().install())
@@ -68,6 +68,7 @@ def addClass(username, password, sectionNum, semesterCombo):
 
     driver.get("https://go.oasis.asu.edu/addclass/?STRM=" +
                str(STRM) + "&ACAD_CAREER=GRAD")
+
     driver.switch_to_frame(driver.find_element_by_xpath("//frame[@src='https://weblogin.asu.edu/cgi-bin/login?callapp=https%3A//go.oasis.asu.edu/waitframeset.html%3Fdelay%3D3500%26url%3Dhttps%253A//cs.oasis.asu.edu/asucsprd/golink/%253F/EMPLOYEE/PSFT_ASUCSPRD/s/WEBLIB_ASU_SA.ASU_SA_ISCRIPT.FieldFormula.IScript_SA%253FURL%253D/EMPLOYEE/PSFT_ASUCSPRD/c/SA_LEARNER_SERVICES.SSR_SSENRL_CART.GBL%25253FSTRM%25253D" + str(
         STRM) + "%252526ACAD_CAREER%25253DGRAD%252526Page%25253DSSR_SSENRL_ADD%252526Action%25253DA%252526INSTITUTION%25253DASU00%252526golink%25253DY']"))
     driver.find_element_by_id("username").send_keys(username)
@@ -242,15 +243,18 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     starttime = time.time()
-    timeInterval = 10.0
 
-    print("\nWelcome to SeatsFinderBot, current task interval is set to " + str(timeInterval) + " seconds.\n")
+    print("\nWelcome to SeatsFinderBot, current task interval is set to " + str(args.timeInterval) + " seconds.\n")
     print("SeatsFinderBot is an Open Source project, it does not collect your ASU username and password.\n")
-    name = input("Before start, we kindly ask your full name (In English) for recording purpose: ")
     
+    while True:    
+        name = input("Before start, we kindly ask your full name (In English) for recording purpose: ")
+        if name != "":
+            break
+
     print("")
 
     print("Starting...\n")
     while True:
         runAction(args.semester, args.reserved, args.section, name.replace(" ","-"), args.choice, args.username, args.password, args.swapWith)
-        time.sleep(args.timeInterval - ((time.time() - starttime) % args.timeInterval))
+        time.sleep(float(args.timeInterval) - ((time.time() - starttime) % float(args.timeInterval)))
