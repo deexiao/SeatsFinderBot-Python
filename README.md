@@ -15,8 +15,8 @@ SeatsFinderBot is an Open Source project, it does not collect your ASU username 
 * ```python3 Bot.py --choice 'add' --username 'a' --password 'a' --section 54321 --timeinterval```
 
 ### Windows
-* ```py SeatsFinderBot.py --choice swap --username a --password a --swapwith 12345 --section 54321```
-* ```py SeatsFinderBot.py --choice add --username a --password a --section 54321 --timeinterval```
+* ```py Bot.py --choice swap --username a --password a --swapwith 12345 --section 54321```
+* ```py Bot.py --choice add --username a --password a --section 54321 --timeinterval```
 
 #### Default arguments
 * ```--reserved``` is set to ```0```
