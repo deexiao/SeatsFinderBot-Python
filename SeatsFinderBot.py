@@ -196,7 +196,7 @@ def urlErrorCheck(url):
     else:
         return response
 
-def runAction(semester, reserved, section, GUID, choice, username, password, swapWith):
+def runAction(semester, reserved, section, GUID, choice, username, password, swapWith, timeInterval):
     try:
         currTime = get_local_time()
         contents = urlErrorCheck(checkURL + str(semester) + "&sectionNumber=" +
@@ -208,7 +208,7 @@ def runAction(semester, reserved, section, GUID, choice, username, password, swa
             if choice == "add":
                 urlErrorCheck(statusURL + GUID + "&taskID=" + str(section) +
                               "&time=" + currTime + "&status=FULL")
-            print("Checked on "+currTime+", the class is FULL, next check in 10 seconds.")
+            print("Checked on "+currTime+", the class is FULL, next check in " + timeInterval + " seconds.")
         elif "OPEN" in str(contents):
             if choice == "swap":
                 urlErrorCheck(statusURL + GUID + "&taskID=" + str(section) +
@@ -220,15 +220,15 @@ def runAction(semester, reserved, section, GUID, choice, username, password, swa
                 addClass(username, password, section, semester)
             if choice == "swap":
                 swapClass(username, password, section, swapWith, semester)
-            print("Checked on "+currTime+", the class is OPEN, next check in 10 seconds.")
+            print("Checked on "+currTime+", the class is OPEN, next check in " + timeInterval + " seconds.")
         elif "NOT FOUND" in str(contents):
-            print("Checked on "+currTime+", the class is NOT FOUND, next check in 10 seconds.")
+            print("Checked on "+currTime+", the class is NOT FOUND, next check in " + timeInterval + " seconds.")
         elif "ERRORURL" in str(contents):
-            print("HTTP ERROR on "+currTime+", next check in 10 seconds.")
+            print("HTTP ERROR on "+currTime+", next check in " + timeInterval + " seconds.")
         else:
-            print("OTHER ERROR on "+currTime+", next check in 10 seconds.")
+            print("OTHER ERROR on "+currTime+", next check in " + timeInterval + " seconds.")
     except:
-        print("runAction error on "+currTime+", next check in 10 seconds.")
+        print("runAction error on "+currTime+", next check in " + timeInterval + " seconds.")
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -256,5 +256,5 @@ if __name__ == "__main__":
 
     print("Starting...\n")
     while True:
-        runAction(args.semester, args.reserved, args.section, name.replace(" ","-"), args.choice, args.username, args.password, args.swapWith)
+        runAction(args.semester, args.reserved, args.section, name.replace(" ","-"), args.choice, args.username, args.password, args.swapWith, args.timeInterval)
         time.sleep(float(args.timeInterval) - ((time.time() - starttime) % float(args.timeInterval)))
