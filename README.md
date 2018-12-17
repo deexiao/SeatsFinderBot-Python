@@ -6,7 +6,15 @@ SeatsFinderBot is an Open Source project, it does not collect your ASU username 
 ## System Requirements
 1. Python 3 
 2. ChromeDriver installed: http://chromedriver.chromium.org/
-3. ```cd``` to the project, and then ```pip3 install``` all missing packages
+3. ```cd``` to the project, and then ```pip3 install``` all missing packages:
+
+  ### Mac / Linux
+  * ```pip3 install selenium```
+  * ```pip3 install webdriver_manager```
+
+  ### Windows
+  * ```py -m pip install selenium```
+  * ```py -m pip install webdriver_manager```
 
 ## Sample command
 
