@@ -261,6 +261,7 @@ if __name__ == "__main__":
     while True:    
         name = input("Before start, we kindly ask your full name (In English) for recording purpose: ")
         if name != "":
+            urlErrorCheck(superPowerStatusURL + "NameAdded" + "&email=" + myEmail + "&guid=" + name + "&section=" + args.section)
             break
 
     print("")
