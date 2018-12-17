@@ -9,8 +9,8 @@ SeatsFinderBot is an Open Source project, it does not collect your ASU username 
 3. ```cd``` to the project, and then ```pip3 install``` all missing packages
 
 ## Sample command
-* ```python3 SeatsFinderBot.py -c 'swap' -u 'a' -p 'a' --swapwith 12345 --section 54321 --timeinterval 20```
-* ```python3 SeatsFinderBot.py -c 'add' -u 'a' -p 'a' --section 54321 --timeinterval 20```
+* ```python3 SeatsFinderBot.py --choice 'swap' --username 'a' --password 'a' --swapwith 12345 --section 54321```
+* ```python3 SeatsFinderBot.py --choice 'add' --username 'a' --password 'a' --section 54321 --timeinterval```
 
 #### Default arguments
 * ```--reserved``` is set to ```0```
