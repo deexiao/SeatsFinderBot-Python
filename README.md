@@ -10,9 +10,10 @@ SeatsFinderBot is an Open Source project, it does not collect your ASU username 
 
 ## Sample command
 ```python3 SeatsFinderBot.py --choice 'swap' --username 'a' --password 'a' --swapwith 12345 --section 54321```
-* ```--reserved``` is set to  **default**  ```0```
-* ```--semester``` is set to  **default**  ```'Spring+2019'```
-* ```--timeinterval``` is set to  **default**  ```10 seconds```
+### Default arguments
+* ```--reserved``` is set to ```0```
+* ```--semester``` is set to ```'Spring+2019'```
+* ```--timeinterval``` is set to ```10 seconds```
 
 ## Command Arguments
 
