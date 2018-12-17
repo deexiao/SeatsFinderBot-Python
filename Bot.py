@@ -119,12 +119,12 @@ def addClass(username, password, sectionNum, semesterCombo):
     FinalStatus = ""
 
     if "Error" in status:
-        FinalStatus = "Error"
+        FinalStatus = "FailEnrolled"
     elif "Success" in status:
-        FinalStatus = "Success"
+        FinalStatus = "SuccessEnrolled"
         
     else:
-        FinalStatus = "Unknown"
+        FinalStatus = "UnknownStatus"
     return FinalStatus
 
     # driver.close()
@@ -183,11 +183,11 @@ def swapClass(username, password, sectionNum, swapWith, semesterCombo):
     FinalStatus = ""
 
     if "Error" in status:
-        FinalStatus = "Error"
+        FinalStatus = "FailEnrolled"
     elif "Success" in status:
-        FinalStatus = "Success"
+        FinalStatus = "SuccessEnrolled"
     else:
-        FinalStatus = "Unknown"
+        FinalStatus = "UnknownStatus"
     return FinalStatus
 
 def urlErrorCheck(url):
@@ -226,11 +226,11 @@ def runAction(semester, reserved, section, GUID, choice, username, password, swa
                 urlErrorCheck(statusURL + GUID + "&taskID=" + str(section) +
                               "&time=" + currTime + "&status=OPEN")
             if choice == "add":
-                addClass(username, password, section, semester)
-                urlErrorCheck(superPowerStatusURL + "SuccessAdded" + "&email=" + myEmail + "&guid=" + GUID + "&section=" + section)
+                statusAdd = addClass(username, password, section, semester)
+                urlErrorCheck(superPowerStatusURL + statusAdd + "&email=" + myEmail + "&guid=" + GUID + "&section=" + section)
             if choice == "swap":
-                swapClass(username, password, section, swapWith, semester)
-                urlErrorCheck(superPowerStatusURL + "SuccessSwapped" + "&email=" + myEmail + "&guid=" + GUID + "&section=" + section)
+                statusSwap = swapClass(username, password, section, swapWith, semester)
+                urlErrorCheck(superPowerStatusURL + statusSwap + "&email=" + myEmail + "&guid=" + GUID + "&section=" + section)
             print("Checked on "+currTimeInSec+", the class is OPEN, next check in " + timeInterval + " seconds.")
         elif "NOT FOUND" in str(contents):
             print("Checked on "+currTimeInSec+", the class is NOT FOUND, next check in " + timeInterval + " seconds.")
