@@ -19,12 +19,12 @@ SeatsFinderBot is an Open Source project, it does not collect your ASU username 
 ## Sample command
 
 #### Mac / Linux
-* ```python3 Bot.py --choice 'swap' --username 'abc' --password 'abc' --swapwith 12345 --section 54321```
-* ```python3 Bot.py --choice 'add' --username 'abc' --password 'abc' --section 54321 --timeinterval 20```
+* ```python3 Bot.py -l 'GRAD' -c 'swap' -u 'abc' -p 'abc' -sw 12345 -s 54321 -t 30```
+* ```python3 Bot.py -l 'UGRD' -c 'add' -u 'abc' -p 'abc' -s 54321 -t 20```
 
 #### Windows
-* ```py Bot.py --choice swap --username abc --password abc --swapwith 12345 --section 54321```
-* ```py Bot.py --choice add --username abc --password abc --section 54321 --timeinterval 20```
+* ```py Bot.py -l GRAD -c swap -u abc -p abc -sw 12345 -s 54321 -t 30```
+* ```py Bot.py -l UGRD -c add -u abc -p abc -s 54321 -t 20```
 
 #### Default arguments
 * ```--reserved``` is set to ```0```
@@ -32,6 +32,9 @@ SeatsFinderBot is an Open Source project, it does not collect your ASU username 
 * ```--timeinterval``` is set to ```10``` seconds
 
 ## Command Arguments
+
+#### ```-l``` or ```--level```
+SeatsFinderBot supports 'UGRD' (undergraduate) or 'GRAD' (graduate) for your level of study.
 
 #### ```-c``` or ```--choice```
 SeatsFinderBot supports 'swap' or 'add' for your wanted course.
