@@ -69,16 +69,16 @@ def semesterIndex(semesterCombo):
     if semesterCombo == "Fall+2025":
         return "2257"
 
-def addClass(username, password, sectionNum, semesterCombo):
+def addClass(level, username, password, sectionNum, semesterCombo):
     driver = webdriver.Chrome(ChromeDriverManager().install())
 
     STRM = semesterIndex(semesterCombo)
 
     driver.get("https://go.oasis.asu.edu/addclass/?STRM=" +
-               str(STRM) + "&ACAD_CAREER=GRAD")
+               str(STRM) + "&ACAD_CAREER=" + level)
 
     driver.switch_to_frame(driver.find_element_by_xpath("//frame[@src='https://weblogin.asu.edu/cgi-bin/login?callapp=https%3A//go.oasis.asu.edu/waitframeset.html%3Fdelay%3D3500%26url%3Dhttps%253A//cs.oasis.asu.edu/asucsprd/golink/%253F/EMPLOYEE/PSFT_ASUCSPRD/s/WEBLIB_ASU_SA.ASU_SA_ISCRIPT.FieldFormula.IScript_SA%253FURL%253D/EMPLOYEE/PSFT_ASUCSPRD/c/SA_LEARNER_SERVICES.SSR_SSENRL_CART.GBL%25253FSTRM%25253D" + str(
-        STRM) + "%252526ACAD_CAREER%25253DGRAD%252526Page%25253DSSR_SSENRL_ADD%252526Action%25253DA%252526INSTITUTION%25253DASU00%252526golink%25253DY']"))
+        STRM) + "%252526ACAD_CAREER%25253D"+level+"%252526Page%25253DSSR_SSENRL_ADD%252526Action%25253DA%252526INSTITUTION%25253DASU00%252526golink%25253DY']"))
     driver.find_element_by_id("username").send_keys(username)
     driver.find_element_by_id("password").send_keys(password)
     driver.find_element_by_class_name("submit").send_keys(Keys.RETURN)
@@ -128,16 +128,16 @@ def addClass(username, password, sectionNum, semesterCombo):
         FinalStatus = "UnknownStatus"
     return FinalStatus
 
-def swapClass(username, password, sectionNum, swapWith, semesterCombo):
+def swapClass(level, username, password, sectionNum, swapWith, semesterCombo):
     driver = webdriver.Chrome(ChromeDriverManager().install())
 
     STRM = semesterIndex(semesterCombo)
 
     driver.get("https://go.oasis.asu.edu/swapclass/?STRM=" +
-               str(STRM) + "&ACAD_CAREER=GRAD&ASU_CLASS_NBR=" + str(sectionNum))
+               str(STRM) + "&ACAD_CAREER=" + level + "&ASU_CLASS_NBR=" + str(sectionNum))
 
-    driver.switch_to_frame(driver.find_element_by_xpath("//frame[@src='https://weblogin.asu.edu/cgi-bin/login?callapp=https%3A//go.oasis.asu.edu/waitframeset.html%3Fdelay%3D3500%26url%3Dhttps%253A//cs.oasis.asu.edu/asucsprd/golink/%253F/EMPLOYEE/PSFT_ASUCSPRD/s/WEBLIB_ASU_SA.ASU_SA_ISCRIPT.FieldFormula.IScript_SA%253FURL%253D/EMPLOYEE/PSFT_ASUCSPRD/c/SA_LEARNER_SERVICES.SSR_SSENRL_SWAP.GBL%25253FSTRM%25253D" + str(
-        STRM) + "%252526ACAD_CAREER%25253DGRAD%252526ASU_CLASS_NBR%25253D"+str(sectionNum)+"%252526Page%25253DSSR_SSENRL_SWAP%252526Action%25253DA%252526INSTITUTION%25253DASU00%252526golink%25253DY']"))
+    driver.switch_to_frame(driver.find_element_by_xpath("//frame[@src='https://weblogin.asu.edu/cgi-bin/login?callapp=https%3A//go.oasis.asu.edu/waitframeset.html%3Fdelay%3D3500%26url%3Dhttps%253A//cs.oasis.asu.edu/asucsprd/golink/%253F/EMPLOYEE/PSFT_ASUCSPRD/s/WEBLIB_ASU_SA.ASU_SA_ISCRIPT.FieldFormula.IScript_SA%253FURL%253D/EMPLOYEE/PSFT_ASUCSPRD/c/SA_LEARNER_SERVICES.SSR_SSENRL_SWAP.GBL%25253FSTRM%25253D" + str(STRM) + "%252526ACAD_CAREER%25253D"+ level +"%252526ASU_CLASS_NBR%25253D"+str(sectionNum)+"%252526Page%25253DSSR_SSENRL_SWAP%252526Action%25253DA%252526INSTITUTION%25253DASU00%252526golink%25253DY']"))
+    
     driver.find_element_by_id("username").send_keys(username)
     driver.find_element_by_id("password").send_keys(password)
     driver.find_element_by_class_name("submit").send_keys(Keys.RETURN)
@@ -202,7 +202,7 @@ def urlErrorCheck(url):
     else:
         return response
              
-def runAction(semester, reserved, section, GUID, choice, username, password, swapWith, timeInterval):
+def runAction(level, semester, reserved, section, GUID, choice, username, password, swapWith, timeInterval):
     try:
         currTime = get_local_time()
         currTimeInSec = get_local_time_inSec()
@@ -223,10 +223,10 @@ def runAction(semester, reserved, section, GUID, choice, username, password, swa
                 urlErrorCheck(statusURL + GUID + "&taskID=" + str(section) +
                               "&time=" + currTime + "&status=OPEN")
             if choice == "add":
-                statusAdd = addClass(username, password, section, semester)
+                statusAdd = addClass(level, username, password, section, semester)
                 urlErrorCheck(superPowerStatusURL + statusAdd + "&email=" + myEmail + "&guid=" + GUID + "&section=" + section)
             if choice == "swap":
-                statusSwap = swapClass(username, password, section, swapWith, semester)
+                statusSwap = swapClass(level, username, password, section, swapWith, semester)
                 urlErrorCheck(superPowerStatusURL + statusSwap + "&email=" + myEmail + "&guid=" + GUID + "&section=" + section)
             print("Checked on "+currTimeInSec+", the class is OPEN, next check in " + timeInterval + " seconds.")
         elif "NOT FOUND" in str(contents):
@@ -240,6 +240,7 @@ def runAction(semester, reserved, section, GUID, choice, username, password, swa
 
 if __name__ == "__main__":
     parser = ArgumentParser()
+    parser.add_argument("-l", "--level", dest="level")
     parser.add_argument("-c", "--choice", dest="choice")
     parser.add_argument("-u", "--username", dest="username")
     parser.add_argument("-p", "--password", dest="password")
@@ -265,5 +266,5 @@ if __name__ == "__main__":
 
     print("Starting...\n")
     while True:
-        runAction(args.semester, args.reserved, args.section, name.replace(" ","-"), args.choice, args.username, args.password, args.swapWith, str(args.timeInterval))
+        runAction(args.level, args.semester, args.reserved, args.section, name.replace(" ","-"), args.choice, args.username, args.password, args.swapWith, str(args.timeInterval))
         time.sleep(float(args.timeInterval) - ((time.time() - starttime) % float(args.timeInterval)))
